@@ -19,7 +19,11 @@ jobs:
       uses: BSFishy/meson-build@v1.0.3
       with:
         action: build
+        meson-version: 1.5.0
+        ninja-version: 1.12.1
     - name: Meson Build
       uses: BSFishy/meson-build@v1.0.3
       with:
         action: test
+        meson-version: 1.5.0
+        ninja-version: 1.12.1

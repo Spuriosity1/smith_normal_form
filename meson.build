@@ -6,6 +6,20 @@ project('smith_normal_form', 'cpp',
 
 inc = include_directories('include')
 
+libsnf_deps = []
+
+arma_dep = dependency('Armadillo', required: false)
+
+# optional armadillo wrapper
+if get_option('build-armadillo')
+  add_global_arguments('-DARMADILLO', language : 'cpp')
+  if arma_dep.found()
+    libsnf_deps += [arma_dep]
+  else
+    error('Failed to find Armadillo.')
+  endif
+endif
+
 # build the library
 subdir('src')
 

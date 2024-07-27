@@ -1,13 +1,45 @@
 # smith_normal_form
 Computes the smith normal form of an integer matrix in C++.
 
-See demo.cpp, where you can input the matrix A (whose Smith Normal Form you wish to compute) and pass it 
-into the calculator, giving its Smith Normal Form Decomposition.
+See `snftest.cc`, which accepts a text file containing the matrix A 
+(whose Smith Normal Form you wish to compute)
+and prints its Smith Normal Form decomposition.
 
-To build the demo run the command (on linux) 
+# BUILDING
+
+This project is built with the [meson build system](https://mesonbuild.com).
+
+To build locally, run
+```zsh 
+meson setup build
+ninja -C build
+# optional, runs some sanity checks
+ninja -C build test
 ```
-sh build_demo.sh 
-
+To install, simply run
+```zsh
+meson install
 ```
 
-TO DO: Create pdf file with examples.
+To use as a [subproject](https://mesonbuild.com/Subprojects.html#using-a-subproject) of your own meson project, start with the directory structure (note that it **must** be called `subprojects`)
+```
+my_project -|- meson.build
+            |- subprojects -|- ...
+            |               |- ...
+            |               |- ...
+            |- ...
+```
+
+In the top-level `meson.build`, define the dependency through
+```
+snf_project = subproject('smith_normal_form')
+snf_dep = snf_project.get_variable('snf_dep')
+```
+In any files using this package, add `snf_dep` as a dependency.
+
+# TODO
+- Even more nit tests
+- Add wrappers to Armadillo arma::imat and Eigen matrices
+- Scrutinise the algorithm to make the L and R matrices simpler
+- Currently uses a naive implementation, for really large matrices there are many superior algorithms e.g. https://www.isa-afp.org/browser_info/current/AFP/Smith_Normal_Form/document.pdf
+

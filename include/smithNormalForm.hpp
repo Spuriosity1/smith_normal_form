@@ -9,6 +9,9 @@
 
 #include "matrix.hpp"
 
+
+namespace SmithNormalFormCalculator {
+
 struct SmithNormalFormDecomposition {
 	SmithNormalFormDecomposition(Matrix<int> left, Matrix<int> diag, Matrix<int> right) :
 		L(left),
@@ -20,7 +23,6 @@ struct SmithNormalFormDecomposition {
     Matrix<int> R;
     };
 
-namespace SmithNormalFormCalculator {
 int remainder(int a, int b);
 
 int quotient(int a, int b);

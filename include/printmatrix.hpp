@@ -7,14 +7,15 @@
 
 int DigitLength(int a);
 
-int EntryFatness(const Matrix<int>& M);
+int EntryFatness(const SmithNormalFormCalculator::Matrix<int>& M);
 
 
 
 template <typename Ring>
-std::ostream &operator<< (std::ostream &os, const Matrix<Ring> &M){
+std::ostream &operator<< (std::ostream &os, 
+        const SmithNormalFormCalculator::Matrix<Ring> &M){
     int fatness = EntryFatness(M);
-    for (int rowIndex = 0; rowIndex < M.GetHeight(); rowIndex++ ) {
+    for (unsigned long rowIndex = 0; rowIndex < M.GetHeight(); rowIndex++ ) {
         const std::vector<int>& row = M[rowIndex];
         for (int x: row) {
             if (x>=0) {

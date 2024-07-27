@@ -4,8 +4,13 @@
 #include <iostream>
 #include <vector>
 
+#ifdef ARMADILLO
+#include <armadillo>
+#endif
+
 // implementing a matrix where the coefficients form a Ring
 // https://en.wikipedia.org/wiki/Ring_(mathematics)
+namespace SmithNormalFormCalculator {
 
 template <typename Ring>
 class Matrix
@@ -52,12 +57,37 @@ public:
 		return true;
 	}
 
+// Wrappers (dumb, not clever at all)
+//
+#ifdef ARMADILLO
+	Matrix(const arma::Mat<Ring>& X){
+		for (size_t i=0; i < X.n_rows; i++){
+			std::vector<Ring> row;
+			for (size_t j=0; j< X.n_cols; j++){
+				row.push_back( X(i, j) );
+			}
+			matrix_.push_back(row);
+		}
+	}
+	inline arma::Mat<Ring> to_armadillo() {
+		arma::Mat<Ring> retval(GetHeight(), GetWidth());
+		for (size_t row=0; row < GetHeight(); row++){
+			for (size_t col=0; col<GetWidth(); col++){
+				retval(row, col) = matrix_[row][col];
+			}
+		}
+		return retval;
+	}
+
+
+#endif // end wrapper ARMADILLO
+
+
 private:
 	std::vector<std::vector<Ring>> matrix_;
 };
 
 // matrix arithmetic
-
 template<typename Ring>
 Matrix<Ring> operator*(const Matrix<Ring>& A, const Matrix<Ring>& B) {
 	// the number of rows of product is the number of rows in the first matrix A, hence
@@ -70,13 +100,13 @@ Matrix<Ring> operator*(const Matrix<Ring>& A, const Matrix<Ring>& B) {
 		throw;
 	}
 
-	for (int rowIndex = 0; rowIndex < A.GetHeight(); rowIndex++) {
+	for (unsigned long rowIndex = 0; rowIndex < A.GetHeight(); rowIndex++) {
 		//TODO: reserve the size of the row for efficiency
 		productMatrix.push_back({});
-		for (int columnIndex = 0; columnIndex < B.GetWidth(); columnIndex++) {
+		for (unsigned long columnIndex = 0; columnIndex < B.GetWidth(); columnIndex++) {
 			// construct the rowIndex, columnIndex entry of product matrix here
 			Ring newEntry = 0;
-			for (int i=0; i < A.GetWidth(); i++) {
+			for (unsigned long i=0; i < A.GetWidth(); i++) {
 				newEntry += A[rowIndex][i] * B[i][columnIndex];
 			}
 
@@ -87,7 +117,5 @@ Matrix<Ring> operator*(const Matrix<Ring>& A, const Matrix<Ring>& B) {
 	return productMatrix;
 }
 
-
-
-
+}; // End of namespace SmithNormalFormCalculator
 #endif

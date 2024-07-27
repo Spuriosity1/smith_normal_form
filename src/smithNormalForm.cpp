@@ -38,7 +38,7 @@ void killRowEntry (Matrix<int>& M, int columnIndex, int killerRowIndex,
 void killLowerPart (Matrix<int>& M, int rowIndex, int columnIndex, 
     Matrix<int> *L) {
 
-    for (int i=rowIndex+1; i<M.GetHeight(); i++) {
+    for (unsigned long i=rowIndex+1; i<M.GetHeight(); i++) {
         killRowEntry(M, columnIndex, rowIndex, i , L);
     }
 }
@@ -56,7 +56,7 @@ void killColumnEntry (Matrix<int>& M, int rowIndex, int killerColumnIndex,
 
 void killRightPart (Matrix<int>& M, int rowIndex, int columnIndex, 
     Matrix<int> *A) {
-    for (int i=columnIndex+1; i<M.GetWidth(); i++) {
+    for (unsigned long i=columnIndex+1; i<M.GetWidth(); i++) {
         killColumnEntry(M, rowIndex, columnIndex,i , A);}
 }
 

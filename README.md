@@ -1,4 +1,6 @@
 # smith_normal_form
+[![Build and Test](https://github.com/Spuriosity1/smith_normal_form/actions/workflows/main.yml/badge.svg)](https://github.com/Spuriosity1/smith_normal_form/actions/workflows/main.yml)
+
 Computes the smith normal form of an integer matrix in C++.
 
 See `snftest.cc`, which accepts a text file containing the matrix A 

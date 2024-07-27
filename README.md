@@ -38,8 +38,8 @@ snf_dep = snf_project.get_variable('snf_dep')
 In any files using this package, add `snf_dep` as a dependency.
 
 # TODO
-- Even more nit tests
-- Add wrappers to Armadillo arma::imat and Eigen matrices
-- Scrutinise the algorithm to make the L and R matrices simpler
+- Even more unit tests
+- QoL: Add converters for Eigen matrices
+- Consider modifying the algorithm to make the L and R matrices simpler
 - Currently uses a naive implementation, for really large matrices there are many superior algorithms e.g. https://www.isa-afp.org/browser_info/current/AFP/Smith_Normal_Form/document.pdf
 

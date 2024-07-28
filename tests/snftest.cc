@@ -36,9 +36,9 @@ int main (int argc, char *argv[]) {
 	auto res1 = result.L * A * result.R;
     std::cout << "Decomposed A= " << A << "as follows:\n"; 
     std::cout << "L = " << result.L <<"\n";
-    std::cout << "D = " << result.D <<"\n";
     std::cout << "R = " << result.R <<"\n";
-    std::cout << result.L << " * " << A << " * " << result.R << " = " << result.D;
+    std::cout << "D = " << result.D <<"\n";
+    std::cout << result.L << " * " << A << " * " << result.R << " = " << res1;
     
     if (res1 == result.D){
         return 0;

@@ -57,6 +57,16 @@ public:
 		return true;
 	}
 
+	Matrix<Ring> transpose() const {
+		Matrix<Ring> tr(this->colCount());
+		for (size_t i=0; i < this->rowCount; i++){
+			for (size_t j=0; j< this->colCount(); j++){
+				tr[j][i] = matrix_[i][j];
+			}
+		}
+		return tr;	
+	}
+
 // Wrappers (dumb, not clever at all)
 //
 #ifdef ARMADILLO

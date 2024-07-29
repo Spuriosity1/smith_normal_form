@@ -39,9 +39,19 @@ int main (int argc, char *argv[]) {
     std::cout << "D = " << result.D <<"\n";
     std::cout << "R = " << result.R <<"\n";
     std::cout << result.L << " * " << A << " * " << result.R << " = " << result.D;
-    
-    if (res1 == result.D){
-        return 0;
+
+    int retval = 0;
+    // check that the decomposition is correct
+    if (res1 != result.D){
+        retval |= 0x01;
     }
-    return 1;
+    // check that D is truly diagonal
+    for (unsigned i=0; i<A.GetHeight(); i++){
+        for (unsigned j=0; j<A.GetWidth(); j++){
+            if (i != j && result.D[i][j] !=0) {
+               retval |= 0x02; 
+            }
+        }
+    }
+    return retval;
 }

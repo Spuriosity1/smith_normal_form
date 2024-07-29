@@ -37,40 +37,38 @@ Matrix<int> IdentityMatrix(idx_t d) {
 //add a times row i to row j
 void rowAdd (Matrix<int>& M,
         int a, idx_t i, idx_t j, 
-    Matrix<int> *L) {
+    Matrix<int>& L) {
 
     M[j]=add(scale(a,M[i]),M[j]);
     if (L !=NULL) {
-        (*L)[j]=add(scale(a,(*L)[i]),(*L)[j]);
+        L[j]=add(scale(a,L[i]),L[j]);
     }
 }
 
 void columnAdd (Matrix<int>& M, int a, idx_t i, idx_t j, 
-    Matrix<int> *R) {
-
+    Matrix<int>& R) {
     for (idx_t k=0; k<M.GetHeight(); k++) {
         M[k][j]=a*(M[k][i])+M[k][j];
     }
-    if (R != NULL) {
-        for (idx_t k=0; k<(*R).GetHeight(); k++) {
-        (*R)[k][j]=a*((*R)[k][i])+(*R)[k][j];
+    for (idx_t k=0; k<R.GetHeight(); k++) {
+        R[k][j]=(a*R[k][i])+R[k][j];
     }
-    }
+    
 }
 
-void rowSwap (Matrix<int>& M, idx_t i, idx_t j, Matrix<int> *L) {
+void rowSwap (Matrix<int>& M, idx_t i, idx_t j, Matrix<int>& L) {
     std::swap(M[i], M[j]);
     if (L != NULL) {
-        std::swap((*L)[i], (*L)[j]);
+        std::swap(L[i], L[j]);
     }
 }
 
-void columnSwap (Matrix<int>& M, idx_t i, idx_t j, Matrix<int> *R) {
+void columnSwap (Matrix<int>& M, idx_t i, idx_t j, Matrix<int>& R) {
     for (idx_t k=0; k<M.GetHeight(); k++) {
         std::swap (M[k][j], M[k][i]);}
     if (R != NULL) {
-        for (idx_t k=0; k<(*R).GetHeight(); k++) {
-            std::swap ((*R)[k][j], (*R)[k][i]);}
+        for (idx_t k=0; k<R.GetHeight(); k++) {
+            std::swap (R[k][j], R[k][i]);}
     }
 }
 

@@ -91,7 +91,8 @@ SmithNormalFormDecomposition ComputeSmithNormalForm (Matrix<int> M) {
         }
         for (int i=stage+1; i<width_M; i++ ) {
             int q=(M[stage][i])/(M[stage][stage]);
-            colAdd(M, -q, stage, i, R);}
+            colAdd(M, -q, stage, i, R);
+        }
     }
 
     return SmithNormalFormDecomposition(L, M, R);

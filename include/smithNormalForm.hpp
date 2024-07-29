@@ -28,19 +28,19 @@ int remainder(int a, int b);
 int quotient(int a, int b);
 
 void killRowEntry (Matrix<int>& M, int columnIndex, int killerRowIndex, 
-	int victimRowIndex, Matrix<int> *A=NULL);
+	int victimRowIndex, Matrix<int>& L);
 
 void killLowerPart (Matrix<int>& M, int columnIndex, int rowIndex, 
-	Matrix<int> *L=NULL);
+	Matrix<int>& L);
 
 void killColumnEntry (Matrix<int>& M, int rowIndex, int killerColumnIndex, 
-	int victimColumnIndex, Matrix<int> *A=NULL);
+	int victimColumnIndex, Matrix<int>& R);
 
 void killRightPart (Matrix<int>& M, int rowIndex, int columnIndex, 
-	Matrix<int> *A=NULL);
+	Matrix<int>& A);
 
 void CreateGCDinTopLeft (Matrix<int>& M, int leftColumnIndex, int rightColumnIndex,
-	int stage, Matrix<int> *L=NULL, Matrix<int> *R=NULL);
+	int stage, Matrix<int>& L, Matrix<int>& R);
 
 SmithNormalFormDecomposition ComputeSmithNormalForm (Matrix<int> M);
 

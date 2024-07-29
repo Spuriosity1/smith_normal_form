@@ -25,7 +25,7 @@ int quotient(int a, int b) { // returns q where a=q*b+r where 0<=r<b.
 }
 
 void killRowEntry (Matrix<int>& M, int columnIndex, int killerRowIndex, 
-    int victimRowIndex, Matrix<int> *L) {
+    int victimRowIndex, Matrix<int>& L) {
 
     int q;
     while ( M[victimRowIndex][columnIndex] != 0 ) {
@@ -36,7 +36,7 @@ void killRowEntry (Matrix<int>& M, int columnIndex, int killerRowIndex,
 }
 
 void killLowerPart (Matrix<int>& M, int rowIndex, int columnIndex, 
-    Matrix<int> *L) {
+    Matrix<int>& L) {
 
     for (unsigned long i=rowIndex+1; i<M.GetHeight(); i++) {
         killRowEntry(M, columnIndex, rowIndex, i , L);
@@ -44,7 +44,7 @@ void killLowerPart (Matrix<int>& M, int rowIndex, int columnIndex,
 }
 
 void killColumnEntry (Matrix<int>& M, int rowIndex, int killerColumnIndex, 
-    int victimColumnIndex, Matrix<int> *R) {
+    int victimColumnIndex, Matrix<int>& R) {
 
     int q;
     while ( M[rowIndex][victimColumnIndex] != 0 ) {
@@ -55,13 +55,13 @@ void killColumnEntry (Matrix<int>& M, int rowIndex, int killerColumnIndex,
 }
 
 void killRightPart (Matrix<int>& M, int rowIndex, int columnIndex, 
-    Matrix<int> *A) {
+    Matrix<int>& A) {
     for (unsigned long i=columnIndex+1; i<M.GetWidth(); i++) {
         killColumnEntry(M, rowIndex, columnIndex,i , A);}
 }
 
 void CreateGCDinTopLeft (Matrix<int>& M, int leftColumnIndex, int rightColumnIndex, 
-    int stage, Matrix<int> *L, Matrix<int> *R) {
+    int stage, Matrix<int>& L, Matrix<int>& R) {
 
     while (true) {
         killLowerPart(M, stage, leftColumnIndex, L);
@@ -84,14 +84,14 @@ SmithNormalFormDecomposition ComputeSmithNormalForm (Matrix<int> M) {
 
     for (int stage=0; ((stage<width_M) && (stage<height_M)); stage++ ) {
             for (int i=stage+1; i<width_M; i++ ) {
-                CreateGCDinTopLeft (M, stage, i, stage, &L, &R);}
+                CreateGCDinTopLeft (M, stage, i, stage, L, R);}
 
         if (M[stage][stage]==0) {
             break; 
         }
         for (int i=stage+1; i<width_M; i++ ) {
             int q=(M[stage][i])/(M[stage][stage]);
-            columnAdd(M, -q, stage, i, &R);}
+            columnAdd(M, -q, stage, i, R);}
     }
 
     return SmithNormalFormDecomposition(L, M, R);

@@ -12,16 +12,16 @@ std::vector<int> scale(int a, const std::vector<int>& v);
 Matrix<int> IdentityMatrix(idx_t d);
 
 void rowAdd (Matrix<int>& M, int a, idx_t i, idx_t j, 
-	Matrix<int> *L = NULL);
+	Matrix<int>& L);
 
 void columnAdd (Matrix<int>& M, int a, idx_t i, idx_t j, 
-	Matrix<int> *R = NULL);
+	Matrix<int>& R);
 
 void rowSwap (Matrix<int>& M, idx_t i, idx_t j, 
-	Matrix<int> *L = NULL);
+	Matrix<int>& L);
 
 void columnSwap (Matrix<int>& M, idx_t i, idx_t j, 
-	Matrix<int> *R = NULL);
+	Matrix<int>& R);
 };
 
 #endif

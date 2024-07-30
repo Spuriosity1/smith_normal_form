@@ -14,6 +14,9 @@ Matrix<int> IdentityMatrix(idx_t d);
 void rowAdd (Matrix<int>& M, int a, idx_t i, idx_t j, 
 	Matrix<int>& L);
 
+void rowMult (Matrix<int>& M, int a, idx_t i, 
+	Matrix<int>& L);
+
 void columnAdd (Matrix<int>& M, int a, idx_t i, idx_t j, 
 	Matrix<int>& R);
 

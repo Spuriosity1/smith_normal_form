@@ -26,6 +26,14 @@ public:
 		matrix_.reserve(rowCount);
 	}
 
+
+	Matrix(unsigned int rowCount, unsigned int colCount) {
+		matrix_.resize(rowCount);
+		for (auto& row : matrix_){
+			row.resize(colCount);
+		}
+	}
+
 	void push_back(std::vector<Ring> row) {
 		matrix_.push_back(row);
 	}
@@ -56,6 +64,17 @@ public:
 		}
 		return true;
 	}
+
+	Matrix<Ring> transpose() const {
+		Matrix<Ring> tr(this->GetWidth(), this->GetHeight());
+		for (size_t i=0; i < matrix_.size(); i++){
+			for (size_t j=0; j< matrix_[i].size(); j++){
+				tr[j][i] = matrix_[i][j];
+			}
+		}
+		return tr;	
+	}
+
 
 // Wrappers (dumb, not clever at all)
 //

@@ -4,6 +4,7 @@ test_deps = [snf_dep, arma_dep]
 snftest = executable('snftest', 'snftest.cc',
   dependencies : test_deps)
 
+inversetest = executable('inversetest', 'inversetest.cc', dependencies : test_deps)
 
 
 test_matrices = files(['testdata/1x1.mat',
@@ -13,10 +14,21 @@ test_matrices = files(['testdata/1x1.mat',
   'testdata/3x2.mat',
   'testdata/3x3.mat'])
 
+test_invertible_matrices = files([
+'testdata/invertible_2x2_2.mat',
+'testdata/invertible_3x3_10.mat',
+'testdata/invertible_3x3_17.mat',
+'testdata/invertible_3x3_20.mat',
+'testdata/invertible_3x3_5.mat'
+])
+
 foreach matfile : test_matrices
   test('snftest', snftest, args: [matfile.full_path()])
 endforeach
 
+foreach matfile : test_invertible_matrices
+  test('inversetest', inversetest, args: [matfile.full_path()])
+endforeach
 
 if get_option('build-armadillo')
   armatest = executable('armatest', 'armatest.cc', dependencies : test_deps)

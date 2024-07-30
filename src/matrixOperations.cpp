@@ -63,12 +63,23 @@ void rowSwap (Matrix<int>& M, idx_t i, idx_t j, Matrix<int>& L) {
     }
 }
 
+
 void columnSwap (Matrix<int>& M, idx_t i, idx_t j, Matrix<int>& R) {
     for (idx_t k=0; k<M.GetHeight(); k++) {
         std::swap (M[k][j], M[k][i]);}
     if (R != NULL) {
         for (idx_t k=0; k<R.GetHeight(); k++) {
             std::swap (R[k][j], R[k][i]);}
+    }
+}
+
+void rowMult (Matrix<int>& M, int a, idx_t i, 
+	Matrix<int>& L){
+    for (idx_t j=0; j<M.GetWidth(); j++){
+        M[i][j] *= a;
+    }
+    for (idx_t j=0; j<L.GetWidth(); j++){
+        L[i][j] *= a;
     }
 }
 

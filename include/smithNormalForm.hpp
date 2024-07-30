@@ -42,7 +42,9 @@ void killRightPart (Matrix<int>& M, int rowIndex, int columnIndex,
 void CreateGCDinTopLeft (Matrix<int>& M, int leftColumnIndex, int rightColumnIndex,
 	int stage, Matrix<int>& L, Matrix<int>& R);
 
-SmithNormalFormDecomposition ComputeSmithNormalForm (Matrix<int> M);
+SmithNormalFormDecomposition ComputeSmithNormalForm (const Matrix<int>& M);
+
+Matrix<int> inverse( const Matrix<int>& _M);
 
 }
 

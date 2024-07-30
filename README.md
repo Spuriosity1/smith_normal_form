@@ -40,7 +40,15 @@ snf_dep = snf_project.get_variable('snf_dep')
 ```
 In any files using this package, add `snf_dep` as a dependency.
 
+# KNOWN ISSUES
+- No checks are done for integer overflow.
+
 # TODO
+- Template the ring type in the elementary row operations
+- Improve matrix class (vector of vector is a little clunky)
+- Improve algorithm to avoid making large intermediate numbers
+- Add a safe mode that checks for integer overflow
+- Implement some kind of bignum to avoid overflow errors
 - Even more unit tests
 - QoL: Add converters for Eigen matrices
 - Consider modifying the algorithm to make the L and R matrices simpler

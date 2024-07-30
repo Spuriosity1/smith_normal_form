@@ -10,6 +10,12 @@ option('enable-tests',
   description : 'Enables tests.'
 )
 
+option('enable-randomised-tests',
+  type : 'boolean',
+  value : 'true',
+  description : 'Enables randomisation for tests'
+  )
+
 option('enable-benchmarks',
   type : 'boolean',
   value : true,

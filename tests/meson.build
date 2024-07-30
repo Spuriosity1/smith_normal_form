@@ -16,10 +16,14 @@ test_matrices = files(['testdata/1x1.mat',
 
 test_invertible_matrices = files([
 'testdata/invertible_2x2_2.mat',
+'testdata/invertible_3x3_5.mat',
 'testdata/invertible_3x3_10.mat',
 'testdata/invertible_3x3_17.mat',
 'testdata/invertible_3x3_20.mat',
-'testdata/invertible_3x3_5.mat'
+'testdata/invertible_4x4_10.mat',
+'testdata/invertible_4x4_20.mat',
+'testdata/invertible_4x4_30.mat',
+'testdata/invertible_5x5_20.mat'
 ])
 
 foreach matfile : test_matrices

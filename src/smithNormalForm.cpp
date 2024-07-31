@@ -3,6 +3,7 @@
 #include <math.h>
 #include <string.h>
 #include <string>
+#include <cassert>
 
 #include "matrix.hpp"
 #include "printmatrix.hpp"

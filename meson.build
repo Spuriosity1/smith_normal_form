@@ -9,16 +9,20 @@ inc = include_directories('include')
 libsnf_deps = []
 
 arma_dep = dependency('Armadillo', required: false)
+cpp_proj_arguments = []
 
 # optional armadillo wrapper
 if get_option('build-armadillo')
   if arma_dep.found()
-    add_project_arguments('-DARMADILLO', language : 'cpp')
     libsnf_deps += [arma_dep]
   else
-   error('Failed to find Armadillo.')
+    error('Failed to find Armadillo.')
   endif
+else
+    cpp_proj_arguments += ['-DNO_ARMADILLO']
 endif
+
+add_project_arguments(cpp_proj_arguments, language : 'cpp')
 
 # build the library
 subdir('src')

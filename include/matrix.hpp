@@ -4,7 +4,7 @@
 #include <iostream>
 #include <vector>
 
-#ifdef ARMADILLO
+#ifndef NO_ARMADILLO
 #include <armadillo>
 #endif
 
@@ -78,7 +78,7 @@ public:
 
 // Wrappers (dumb, not clever at all)
 //
-#ifdef ARMADILLO
+#ifndef NO_ARMADILLO
 	Matrix(const arma::Mat<Ring>& X){
 		for (size_t i=0; i < X.n_rows; i++){
 			std::vector<Ring> row;

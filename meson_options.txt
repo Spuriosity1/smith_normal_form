@@ -12,7 +12,7 @@ option('enable-tests',
 
 option('enable-randomised-tests',
   type : 'boolean',
-  value : 'true',
+  value : true,
   description : 'Enables randomisation for tests'
   )
 

@@ -12,11 +12,11 @@ arma_dep = dependency('Armadillo', required: false)
 
 # optional armadillo wrapper
 if get_option('build-armadillo')
-  add_global_arguments('-DARMADILLO', language : 'cpp')
   if arma_dep.found()
+    add_project_arguments('-DARMADILLO', language : 'cpp')
     libsnf_deps += [arma_dep]
   else
-    error('Failed to find Armadillo.')
+   error('Failed to find Armadillo.')
   endif
 endif
 

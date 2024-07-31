@@ -40,9 +40,8 @@ void rowAdd (Matrix<int>& M,
     Matrix<int>& L) {
 
     M[j]=add(scale(a,M[i]),M[j]);
-    if (L !=NULL) {
         L[j]=add(scale(a,L[i]),L[j]);
-    }
+    
 }
 
 void columnAdd (Matrix<int>& M, int a, idx_t i, idx_t j, 
@@ -58,19 +57,16 @@ void columnAdd (Matrix<int>& M, int a, idx_t i, idx_t j,
 
 void rowSwap (Matrix<int>& M, idx_t i, idx_t j, Matrix<int>& L) {
     std::swap(M[i], M[j]);
-    if (L != NULL) {
-        std::swap(L[i], L[j]);
-    }
+    std::swap(L[i], L[j]);
 }
 
 
 void columnSwap (Matrix<int>& M, idx_t i, idx_t j, Matrix<int>& R) {
     for (idx_t k=0; k<M.GetHeight(); k++) {
         std::swap (M[k][j], M[k][i]);}
-    if (R != NULL) {
         for (idx_t k=0; k<R.GetHeight(); k++) {
             std::swap (R[k][j], R[k][i]);}
-    }
+    
 }
 
 void rowMult (Matrix<int>& M, int a, idx_t i, 

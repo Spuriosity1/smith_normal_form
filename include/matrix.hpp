@@ -79,15 +79,17 @@ public:
 // Wrappers (dumb, not clever at all)
 //
 #ifndef NO_ARMADILLO
-	Matrix(const arma::Mat<Ring>& X){
+	template<typename IntLike>
+	Matrix(const arma::Mat<IntLike>& X){
 		for (size_t i=0; i < X.n_rows; i++){
 			std::vector<Ring> row;
 			for (size_t j=0; j< X.n_cols; j++){
-				row.push_back( X(i, j) );
+				row.push_back( (Ring) X(i, j) ); // explicit dynamic cast
 			}
 			matrix_.push_back(row);
 		}
 	}
+
 	inline arma::Mat<Ring> to_armadillo() {
 		arma::Mat<Ring> retval(GetHeight(), GetWidth());
 		for (size_t row=0; row < GetHeight(); row++){

@@ -182,8 +182,8 @@ Matrix<Ring> inverse( const Matrix<Ring>& _M){
     // Strategy: 1. Create GCD of first col in top left using row ops.
     // If this is not possible, then the matrix is not invertible so we 
     // raise an exception.
-    idx_t curr_row = 0;
-    while (curr_row < M.GetHeight()){
+    int curr_row = 0;
+    while (curr_row < (int)M.GetHeight()){
         killLowerPart(M, curr_row, curr_row, L);
         if (M[curr_row][curr_row] == -1){
             rowMult(M, -1, curr_row, L);
@@ -195,8 +195,8 @@ Matrix<Ring> inverse( const Matrix<Ring>& _M){
     std::cout << "post-tri: " << M;
     // Matrix should now be upper triangular.
     for (curr_row = M.GetHeight()-1; curr_row>=0; curr_row--){
-        for (idx_t row=0; row<curr_row; row++){
-            rowAdd(M, -M[row][curr_row], curr_row, row, L);
+        for (int row=0; row<curr_row; row++){
+            rowAdd(M, -M[row][curr_row], (idx_t)curr_row, (idx_t)row, L);
             std::cout << "row "<<row <<" curr_row "<<curr_row << M;
         }
     }

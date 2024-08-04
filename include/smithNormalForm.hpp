@@ -79,10 +79,10 @@ Ring quotient(Ring a, Ring b) { // returns q where a=q*b+r where 0<=r<b.
 }
 
 template<typename Ring>
-void killRowEntry (Matrix<Ring>& M, int columnIndex, int killerRowIndex, 
-    int victimRowIndex, Matrix<Ring>& L) {
+void killRowEntry (Matrix<Ring>& M, idx_t columnIndex, idx_t killerRowIndex, 
+    idx_t victimRowIndex, Matrix<Ring>& L) {
 
-    int q;
+    Ring q;
     while ( M[victimRowIndex][columnIndex] != 0  ) {
         q=quotient(M[killerRowIndex][columnIndex], M[victimRowIndex][columnIndex]);
         rowAdd(M, -q, victimRowIndex, killerRowIndex, L);
@@ -91,7 +91,7 @@ void killRowEntry (Matrix<Ring>& M, int columnIndex, int killerRowIndex,
 }
 
 template<typename Ring>
-void killLowerPart (Matrix<Ring>& M, int rowIndex, int columnIndex, 
+void killLowerPart (Matrix<Ring>& M, idx_t rowIndex, idx_t columnIndex, 
     Matrix<Ring>& L) {
 
     for (unsigned long i=rowIndex+1; i<M.GetHeight(); i++) {
@@ -100,10 +100,10 @@ void killLowerPart (Matrix<Ring>& M, int rowIndex, int columnIndex,
 }
 
 template<typename Ring>
-void killColumnEntry (Matrix<Ring>& M, int rowIndex, int killerColumnIndex, 
-    int victimColumnIndex, Matrix<Ring>& R) {
+void killColumnEntry (Matrix<Ring>& M, idx_t rowIndex, idx_t killerColumnIndex, 
+    idx_t victimColumnIndex, Matrix<Ring>& R) {
 
-    int q;
+    Ring q;
     while ( M[rowIndex][victimColumnIndex] != 0 ) {
         q=quotient(M[rowIndex][killerColumnIndex] ,M[rowIndex][victimColumnIndex]);
         columnAdd(M, -q, victimColumnIndex, killerColumnIndex, R);
@@ -112,15 +112,15 @@ void killColumnEntry (Matrix<Ring>& M, int rowIndex, int killerColumnIndex,
 }
 
 template<typename Ring>
-void killRightPart (Matrix<Ring>& M, int rowIndex, int columnIndex, 
+void killRightPart (Matrix<Ring>& M, idx_t rowIndex, idx_t columnIndex, 
     Matrix<Ring>& A) {
     for (unsigned long i=columnIndex+1; i<M.GetWidth(); i++) {
         killColumnEntry(M, rowIndex, columnIndex,i , A);}
 }
 
 template<typename Ring>
-void CreateGCDinTopLeft (Matrix<Ring>& M, int leftColumnIndex, int rightColumnIndex, 
-    int stage, Matrix<Ring>& L, Matrix<Ring>& R) {
+void CreateGCDinTopLeft (Matrix<Ring>& M, idx_t leftColumnIndex, idx_t rightColumnIndex, 
+    idx_t stage, Matrix<Ring>& L, Matrix<Ring>& R) {
 
     while (true) {
         killLowerPart(M, stage, leftColumnIndex, L);
@@ -196,7 +196,7 @@ Matrix<Ring> inverse( const Matrix<Ring>& _M){
     // Matrix should now be upper triangular.
     for (curr_row = M.GetHeight()-1; curr_row>=0; curr_row--){
         for (int row=0; row<curr_row; row++){
-            rowAdd(M, -M[row][curr_row], curr_row, row, L);
+            rowAdd(M, -M[row][curr_row], (idx_t)curr_row, (idx_t)row, L);
             std::cout << "row "<<row <<" curr_row "<<curr_row << M;
         }
     }

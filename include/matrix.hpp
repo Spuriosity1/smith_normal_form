@@ -90,7 +90,7 @@ public:
 		}
 	}
 
-	inline arma::Mat<Ring> to_armadillo() {
+	inline arma::Mat<Ring> to_armadillo() const {
 		arma::Mat<Ring> retval(GetHeight(), GetWidth());
 		for (size_t row=0; row < GetHeight(); row++){
 			for (size_t col=0; col<GetWidth(); col++){

@@ -4,6 +4,9 @@ test_deps = [snf_dep, arma_dep]
 snftest = executable('snftest', 'snftest.cc',
   dependencies : test_deps)
 
+snftest_lli = executable('snftest_lli', 'snftest_lli.cc',
+  dependencies : test_deps)
+
 inversetest = executable('inversetest', 'inversetest.cc', dependencies : test_deps)
 
 
@@ -28,6 +31,7 @@ test_invertible_matrices = files([
 
 foreach matfile : test_matrices
   test('snftest', snftest, args: [matfile.full_path()])
+  test('snftest_lli', snftest_lli, args: [matfile.full_path()])
 endforeach
 
 foreach matfile : test_invertible_matrices

@@ -8,11 +8,13 @@
 
 ///////////////////////////////////////////////////////////////
 /// Checks whether decompositions work for some test cases ////
+typedef long long int data_t;
+
 
 using namespace SmithNormalFormCalculator;
 int main (int argc, char *argv[]) {
     if (argc < 2){
-        std::cerr<<"USAGE: snftest matrix_to_decompose"<<std::endl;
+        std::cerr<<"USAGE: snftest_lli matrix_to_decompose"<<std::endl;
         return 1;
     }
 
@@ -21,7 +23,7 @@ int main (int argc, char *argv[]) {
         std::cerr<<"Could not open file " << argv[1] <<std::endl;
     }
 
-    std::vector<std::vector<int>> tmp;
+    std::vector<std::vector<data_t>> tmp;
     for (std::string line; std::getline(ifs, line);){
         if (line.length() ==0 || line[0] == '#') continue;
 
@@ -31,7 +33,7 @@ int main (int argc, char *argv[]) {
             tmp.back().push_back(stoi(t));
         }
     } 
-    Matrix<int> A(tmp);
+    Matrix<data_t> A(tmp);
     SmithNormalFormDecomposition result = ComputeSmithNormalForm(A);
 	auto res1 = result.L * A * result.R;
     std::cout << "Decomposed A= " << A << "as follows:\n"; 
@@ -45,7 +47,7 @@ int main (int argc, char *argv[]) {
     if (res1 != result.D){
         retval |= 0x01;
     }
-    // check that D is truly diagonal and positive
+    // check that D is truly diagonal
     for (unsigned i=0; i<A.GetHeight(); i++){
         for (unsigned j=0; j<A.GetWidth(); j++){
             if (i != j && result.D[i][j] !=0) {

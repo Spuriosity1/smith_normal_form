@@ -130,12 +130,12 @@ void CreateGCDinTopLeft (Matrix<Ring>& M, idx_t leftColumnIndex, idx_t rightColu
             killColumnEntry(M, stage, leftColumnIndex, rightColumnIndex, R);
             }
     }
-    columnAdd(M, 1, rightColumnIndex, leftColumnIndex, R);
+    columnAdd(M, static_cast<Ring>(1), rightColumnIndex, leftColumnIndex, R);
     killLowerPart(M, stage, leftColumnIndex, L);
 }
 
-template<typename Ring>
-void _ComputeSmithNormalForm ( Matrix<Ring>& M, Matrix<Ring>& L, Matrix<Ring>& R ){
+template<typename Ring, bool ensure_positive_D=true>
+void _ComputeSmithNormalForm ( Matrix<Ring>& M, Matrix<Ring>& L, Matrix<Ring>& R){
     assert(L.GetWidth() == M.GetHeight());
     assert(M.GetWidth() == R.GetHeight());
 
@@ -150,6 +150,14 @@ void _ComputeSmithNormalForm ( Matrix<Ring>& M, Matrix<Ring>& L, Matrix<Ring>& R
             Ring q=(M[stage][i])/(M[stage][stage]);
             columnAdd(M, -q, stage, i, R);}
     }
+
+	if constexpr (ensure_positive_D) {
+		for (idx_t i=0; i<M.GetHeight() && i<M.GetWidth(); i++){
+			if (M[i][i] < 0) {
+				rowMult(M, static_cast<Ring>(-1), i, L);
+			}
+		}
+	}
 }
 
 template<typename Ring>
@@ -186,7 +194,7 @@ Matrix<Ring> inverse( const Matrix<Ring>& _M){
     while (curr_row < (int)M.GetHeight()){
         killLowerPart(M, curr_row, curr_row, L);
         if (M[curr_row][curr_row] == -1){
-            rowMult(M, -1, curr_row, L);
+            rowMult(M, static_cast<Ring>(-1), curr_row, L);
         }
         assert(M[curr_row][curr_row] == 1); // assert M invertible
         ++curr_row;
@@ -195,8 +203,8 @@ Matrix<Ring> inverse( const Matrix<Ring>& _M){
     std::cout << "post-tri: " << M;
     // Matrix should now be upper triangular.
     for (curr_row = M.GetHeight()-1; curr_row>=0; curr_row--){
-        for (int row=0; row<curr_row; row++){
-            rowAdd(M, -M[row][curr_row], (idx_t)curr_row, (idx_t)row, L);
+        for (idx_t row=0; row<(idx_t)curr_row; row++){
+            rowAdd(M, -M[row][curr_row], (idx_t)curr_row, row, L);
             std::cout << "row "<<row <<" curr_row "<<curr_row << M;
         }
     }

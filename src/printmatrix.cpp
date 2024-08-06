@@ -16,17 +16,4 @@ int DigitLength (int a) { // returns number of digits of a.
         return 1 + floor(log10(a));}
 }
 
-int EntryFatness (const SmithNormalFormCalculator::Matrix<int>& M) {
-    int currentMax = 1;
-    for (unsigned long rowIndex = 0; rowIndex < M.GetHeight(); rowIndex++ ) {
-        const std::vector<int>& row = M[rowIndex];
-        for (int x: row) {
-            int t = DigitLength(x);
-            if (currentMax < t) {
-                currentMax = t;}
-            }
-        }
-    return currentMax;
-}
-
 

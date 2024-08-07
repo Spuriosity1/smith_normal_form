@@ -1,7 +1,9 @@
 #ifndef SNF_H
 #define SNF_H
 
+#include <cstdio>
 #include <iostream>
+#include <stdexcept>
 #include <vector>
 #include <math.h>
 #include <string.h>
@@ -118,38 +120,45 @@ void killRightPart (Matrix<Ring>& M, idx_t rowIndex, idx_t columnIndex,
         killColumnEntry(M, rowIndex, columnIndex,i , A);}
 }
 
+/**
+ * Creates the GCD of column [leftColumnIndex] in the upper left of M,
+ * then creates the GCD of row [stage] in the entry (stage, leftColumnIndex). (I think??)
+ *
+ */
 template<typename Ring>
 void CreateGCDinTopLeft (Matrix<Ring>& M, idx_t leftColumnIndex, idx_t rightColumnIndex, 
     idx_t stage, Matrix<Ring>& L, Matrix<Ring>& R) {
 
     while (true) {
-        killLowerPart(M, stage, leftColumnIndex, L);
+        killLowerPart(M, stage, leftColumnIndex, L);	
         if (M[stage][rightColumnIndex]==0) {
             break;
-        } else {
-            killColumnEntry(M, stage, leftColumnIndex, rightColumnIndex, R);
-            }
+		} else {
+			killColumnEntry(M, stage, leftColumnIndex, rightColumnIndex, R);
+		}
     }
-    columnAdd(M, static_cast<Ring>(1), rightColumnIndex, leftColumnIndex, R);
-    killLowerPart(M, stage, leftColumnIndex, L);
+	// Why???
+    //columnAdd(M, static_cast<Ring>(1), rightColumnIndex, leftColumnIndex, R);
+    //killLowerPart(M, stage, leftColumnIndex, L);
 }
 
 template<typename Ring, bool ensure_positive_D=true>
 void _ComputeSmithNormalForm ( Matrix<Ring>& M, Matrix<Ring>& L, Matrix<Ring>& R){
     assert(L.GetWidth() == M.GetHeight());
-    assert(M.GetWidth() == R.GetHeight());
+	assert(M.GetWidth() == R.GetHeight());
 
-    for (idx_t stage=0; ((stage<M.GetWidth()) && (stage<M.GetHeight())); stage++ ) {
-            for (idx_t i=stage+1; i<M.GetWidth(); i++ ) {
-                CreateGCDinTopLeft (M, stage, i, stage, L, R);}
-
-        if (M[stage][stage]==0) {
-            break; 
-        }
-        for (idx_t i=stage+1; i<M.GetWidth(); i++ ) {
-            Ring q=(M[stage][i])/(M[stage][stage]);
-            columnAdd(M, -q, stage, i, R);}
-    }
+	for (idx_t stage=0; ((stage<M.GetWidth()) && (stage<M.GetHeight())); stage++ ) {
+		for (idx_t i=stage+1; i<M.GetWidth(); i++ ) {
+			CreateGCDinTopLeft (M, stage, i, stage, L, R);
+		}
+		if (M[stage][stage]==0) {
+			break; 
+		}
+		for (idx_t i=stage+1; i<M.GetWidth(); i++ ) {
+			Ring q=(M[stage][i])/(M[stage][stage]);
+			columnAdd(M, -q, stage, i, R);
+		}
+	}
 
 	if constexpr (ensure_positive_D) {
 		for (idx_t i=0; i<M.GetHeight() && i<M.GetWidth(); i++){
@@ -184,7 +193,9 @@ SmithNormalFormDecomposition<Ring> ComputeSmithNormalForm (const Matrix<Ring>& M
 
 template<typename Ring>
 Matrix<Ring> inverse( const Matrix<Ring>& _M){ 
-    assert(_M.GetHeight() == _M.GetWidth());
+    if(_M.GetHeight() != _M.GetWidth()){
+		throw std::invalid_argument("M is not square");
+	}
     Matrix<Ring> M(_M);
     auto L = IdentityMatrix<Ring>(M.GetHeight());
     // Strategy: 1. Create GCD of first col in top left using row ops.
@@ -196,20 +207,26 @@ Matrix<Ring> inverse( const Matrix<Ring>& _M){
         if (M[curr_row][curr_row] == -1){
             rowMult(M, static_cast<Ring>(-1), curr_row, L);
         }
-        assert(M[curr_row][curr_row] == 1); // assert M invertible
+		if (M[curr_row][curr_row] != 1){
+			throw std::invalid_argument(
+					"GCD of a col is not 1 => M is not invertible");
+		}
         ++curr_row;
     }
 
-    std::cout << "post-tri: " << M;
     // Matrix should now be upper triangular.
     for (curr_row = M.GetHeight()-1; curr_row>=0; curr_row--){
         for (idx_t row=0; row<(idx_t)curr_row; row++){
             rowAdd(M, -M[row][curr_row], (idx_t)curr_row, row, L);
-            std::cout << "row "<<row <<" curr_row "<<curr_row << M;
         }
     }
     // M should now be the identity matrix.
-    assert( M == IdentityMatrix<Ring>(M.GetWidth()));
+	if( M != IdentityMatrix<Ring>(M.GetWidth())){
+		throw std::logic_error(
+				"Inversion failed for unknown reason -\
+				please report this issue on GitHub:\
+				https://github.com/Spuriosity1/smith_normal_form/issues");
+	}
     
     return L;
 }

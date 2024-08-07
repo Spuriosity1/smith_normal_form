@@ -39,7 +39,6 @@ std::ostream &operator<< (std::ostream &os,
         }
         os << "\n";
     }
-    os << "\n \n";
     return os;
 }
 

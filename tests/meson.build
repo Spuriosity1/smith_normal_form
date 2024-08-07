@@ -15,7 +15,12 @@ test_matrices = files(['testdata/1x1.mat',
   'testdata/3x1.mat',
   'testdata/2x3.mat',
   'testdata/3x2.mat',
-  'testdata/3x3.mat'])
+  'testdata/3x3_1.mat'
+  'testdata/3x3_2.mat'
+  'testdata/3x3_3.mat'
+  'testdata/3x3_4.mat'
+
+  ])
 
 test_invertible_matrices = files([
 'testdata/invertible_2x2_2.mat',

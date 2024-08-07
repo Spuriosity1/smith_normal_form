@@ -52,7 +52,7 @@ int main (int argc, char *argv[]) {
                retval |= 0x02; 
             }
             if (i==j && result.D[i][i] < 0) {
-                retval |= 0x03;
+                retval |= 0x04;
             }
         }
     }

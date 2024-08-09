@@ -16,8 +16,3 @@ option('enable-benchmarks',
   description : 'Enables benchmarks (Not implemented currently)'
 )
 
-option('build-armadillo',
-  type : 'boolean',
-  value : false,
-  description : 'Adds a wrapper that translates to armadillo matrices'
-  )

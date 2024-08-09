@@ -137,9 +137,15 @@ void CreateGCDinTopLeft (Matrix<Ring>& M, idx_t leftColumnIndex, idx_t rightColu
 			killColumnEntry(M, stage, leftColumnIndex, rightColumnIndex, R);
 		}
     }
-	// Why???
-    //columnAdd(M, static_cast<Ring>(1), rightColumnIndex, leftColumnIndex, R);
-    //killLowerPart(M, stage, leftColumnIndex, L);
+    // A.S. 2024-08-07
+    // I commented these lines out, since the decomposition seems successful
+    // without them on any test cases I could find. Of course, the plural of
+    // "test case" is not "proof", but a quick sketch suggests that this is
+    // really fine
+	// The lines in question:
+	//
+    // columnAdd(M, static_cast<Ring>(1), rightColumnIndex, leftColumnIndex, R);
+    // killLowerPart(M, stage, leftColumnIndex, L);
 }
 
 template<typename Ring, bool ensure_positive_D=true>

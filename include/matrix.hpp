@@ -4,10 +4,6 @@
 #include <iostream>
 #include <vector>
 
-#ifndef NO_ARMADILLO
-#include <armadillo>
-#endif
-
 // implementing a matrix where the coefficients form a Ring
 // https://en.wikipedia.org/wiki/Ring_(mathematics)
 namespace SmithNormalFormCalculator {
@@ -75,33 +71,6 @@ public:
 		return tr;	
 	}
 
-
-// Wrappers (dumb, not clever at all)
-//
-#ifndef NO_ARMADILLO
-	template<typename IntLike>
-	Matrix(const arma::Mat<IntLike>& X){
-		for (size_t i=0; i < X.n_rows; i++){
-			std::vector<Ring> row;
-			for (size_t j=0; j< X.n_cols; j++){
-				row.push_back( (Ring) X(i, j) ); // explicit dynamic cast
-			}
-			matrix_.push_back(row);
-		}
-	}
-
-	inline arma::Mat<Ring> to_armadillo() const {
-		arma::Mat<Ring> retval(GetHeight(), GetWidth());
-		for (size_t row=0; row < GetHeight(); row++){
-			for (size_t col=0; col<GetWidth(); col++){
-				retval(row, col) = matrix_[row][col];
-			}
-		}
-		return retval;
-	}
-
-
-#endif // end wrapper ARMADILLO
 
 
 private:

@@ -18,11 +18,6 @@ ninja -C build
 # optional, runs some sanity checks
 ninja -C build test
 ```
-If you want to use armadillo, turn it on using
-```zsh
-meson configure build -Dbuild-armadillo=true
-ninja -C build
-```
 
 To use as a [subproject](https://mesonbuild.com/Subprojects.html#using-a-subproject) of your own meson project, start with the directory structure (note that it **must** be called `subprojects`)
 ```

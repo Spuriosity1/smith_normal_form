@@ -8,7 +8,6 @@ inc = include_directories('include')
 
 libsnf_deps = []
 
-arma_dep = dependency('Armadillo', required: false)
 cpp_proj_arguments = []
 
 add_project_arguments(cpp_proj_arguments, language : 'cpp')

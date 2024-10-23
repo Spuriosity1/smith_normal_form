@@ -10,7 +10,6 @@ template <typename Ring>
 std::vector<Ring> add(const std::vector<Ring>& v, const std::vector<Ring>& w) {
     std::vector<Ring> sum;
     sum.reserve(v.size());
-    std::cout << std::endl;
     for(idx_t i=0; i<v.size(); i++) {
             sum.push_back(v[i]+w[i]);}
     return sum;

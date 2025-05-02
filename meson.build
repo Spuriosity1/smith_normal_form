@@ -14,6 +14,8 @@ add_project_arguments(cpp_proj_arguments, language : 'cpp')
 
 # build the library
 subdir('src')
+subdir('include')
+
 
 snf_dep = declare_dependency(include_directories: inc, 
   link_with: libsnf)
@@ -23,6 +25,13 @@ if get_option('enable-tests')
   #  gtest = subproject('gtest')
   subdir('tests')
 endif
+
+
+pkg_mod = import('pkgconfig')
+pkg_mod.generate(libraries : libsnf,
+                 version : '1.0',
+                 name : 'libsnf',
+                 description : 'Computes integer Smith normal forms')
 
 
 

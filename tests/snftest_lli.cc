@@ -8,7 +8,7 @@
 
 ///////////////////////////////////////////////////////////////
 /// Checks whether decompositions work for some test cases ////
-typedef long long int data_t;
+typedef int64_t data_t;
 
 
 using namespace SmithNormalFormCalculator;
